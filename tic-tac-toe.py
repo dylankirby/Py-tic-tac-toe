@@ -3,22 +3,27 @@ player = 1
 turn_counter = 0
 
 def print_board():
-	print board[0], board[1], board[2]
-	print board[3], board[4], board[5]
-	print board[6], board[7], board[8]
+	print board[0], '|', board[1], '|', board[2]
+	print '__________'
+	print board[3], '|', board[4], '|', board[5]
+	print '__________'
+	print board[6], '|', board[7], '|', board[8]
 
 def take_turn():
 	global player
 	global turn_counter
+	print "Player %s, it's your turn" %(player)
 	position = input('Where would you like to place your marker?: ')
-	if player == 1:
+	if player == 1 and board[position - 1] == position:
 		board[(position - 1)] = 'X'
 		player += 1
 		turn_counter += 1
-	elif player == 2:
+	elif player == 2 and board[position - 1] == position:
 		board[(position - 1)] = 'O'
 		player -= 1
 		turn_counter += 1
+	elif board[position - 1] != position:
+		print 'Invalid position, try again'
 
 def check_win():
 	if (
@@ -37,7 +42,6 @@ def check_win():
 		
 # checks for a tie and returns result
 def check_tie():
-	global turn_counter
 	if turn_counter == 9:
 		print "Sorry Gents, it's a stalemate"
 		reset_game()
